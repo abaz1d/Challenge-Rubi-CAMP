@@ -33,7 +33,7 @@ rl.on('line', (tebakan) => {
         indeks++
 
         if (indeks < isiData.length) {
-            console.log('Pertanyaan  ;' + isiData[indeks].definition)     //menampilkan pertanyaan selanjutnya
+            console.log('Pertanyaan  :' + isiData[indeks].definition)     //menampilkan pertanyaan selanjutnya
             rl.prompt()
         }
         if (indeks == isiData.length) {
