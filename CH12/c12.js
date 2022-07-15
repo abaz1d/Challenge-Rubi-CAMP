@@ -1,11 +1,13 @@
 // dataBase = [{"definition": "siapa presiden indonesia?", "term": "jokowi"}, {"definition": "kapan indonesia merdeka?", "term": "1945"}]
 // greeting sekaligus memanggil fs dan readline
-if (process.argv[3] === undefined) {
+if (process.argv[2] === undefined) {
     console.log('Tolong sertakan nama file sebagai inputan soalnya contohnya : \'node solution.js data.json\'.');
 
 
 }
 else {
+
+    console.log('Nah bener silahkan diisi');
 
 
     const fs = require('fs')
