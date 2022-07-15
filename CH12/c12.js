@@ -19,7 +19,7 @@ else {
     });
 
     // insialisasi 
-    const dataBase = fs.readFileSync('data.json', 'utf-8')
+    const dataBase = fs.readFileSync(process.argv[2], 'utf-8')
     let isiData = JSON.parse(dataBase)
     let indeks = 0
     let percobaan = 0
