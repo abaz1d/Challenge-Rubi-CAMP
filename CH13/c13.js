@@ -1,7 +1,7 @@
 const fs = require('fs')
 const input = process.argv;
 const data = JSON.parse(fs.readFileSync('data.json', 'utf-8'))
-const tagg = []
+
 
 switch (process.argv[2]) {
     case undefined:
@@ -29,7 +29,7 @@ switch (process.argv[2]) {
         data.push({
             'status': false,
             'content': output,
-            'tag': tagg
+            'tag': []
         })
         fs.writeFileSync('data.json', JSON.stringify(data, null, 3))
         console.log(`"${output}" telah ditambahkan`)
@@ -38,7 +38,18 @@ switch (process.argv[2]) {
 
     case 'list':
         for (let j = 0; j < data.length; j++) {
-            console.log(`${j+1} . ${data[j].tag} ${data[j].content}`)
+            console.log(`${j + 1} . ${data[j].tag} ${data[j].content}`)
         };
         break;
+
+
+    case 'delete':
+        let index = parseInt(input[3]) - 1
+        let item = data[index]
+        console.log(`${item} telah dihapus`)
+        data.splice(index, 1)
+        
+        fs.writeFileSync('data.json', JSON.stringify(data, null, 3))
+        break;
+
 }
