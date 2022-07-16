@@ -17,12 +17,12 @@ switch (process.argv[2]) {
             "\n node todo.js list:complete asc|desc" +
             "\n node todo.js tag <task_id> <tag_name_1> <tag_name_2> ... <tag_name_N>" +
             "\n node todo.js filter:<tag_name>"
-            );
+        );
         break;
     case 'add':
         let output = '';
-for(let i = 3, i < input.length, i++){
-    output += input[i] + ''
-}
+        for (let i = 3; i < input.length; i++) {
+            output += input[i] + ''
+        }
 }
 
