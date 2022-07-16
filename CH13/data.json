@@ -1,14 +1,17 @@
 [
-    {
-        "definition": "siapa presiden indonesia?",
-        "term": "jokowi"
-    },
-    {
-        "definition": "kapan indonesia merdeka?",
-        "term": "1945"
-    },
-    {
-        "definition": "Sebutkan kota yang memiliki julukan kota Intan?",
-        "term": "garut"
-    }
+   {
+      "status": false,
+      "content": "saya akan mandi ",
+      "tag": []
+   },
+   {
+      "status": false,
+      "content": "saya akan makan ",
+      "tag": []
+   },
+   {
+      "status": false,
+      "content": "sayaakanmakan",
+      "tag": []
+   }
 ]

@@ -1,6 +1,7 @@
 const fs = require('fs')
 const input = process.argv;
-const data = fs.readFileSync(data.json, 'utf-8')
+const data = JSON.parse(fs.readFileSync('data.json', 'utf-8'))
+const tagg = []
 
 switch (process.argv[2]) {
     case undefined:
@@ -19,10 +20,25 @@ switch (process.argv[2]) {
             "\n node todo.js filter:<tag_name>"
         );
         break;
+
     case 'add':
         let output = '';
         for (let i = 3; i < input.length; i++) {
-            output += input[i] + ''
-        }
-}
+            output += input[i] + ' '
+        };
+        data.push({
+            'status': false,
+            'content': output,
+            'tag': tagg
+        })
+        fs.writeFileSync('data.json', JSON.stringify(data, null, 3))
+        console.log(`"${output}" telah ditambahkan`)
+        break;
 
+
+    case 'list':
+        for (let j = 0; j < data.length; j++) {
+            console.log(`${j+1} . ${data[j].tag} ${data[j].content}`)
+        };
+        break;
+}
