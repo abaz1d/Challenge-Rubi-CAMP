@@ -45,16 +45,6 @@ switch (process.argv[2]) {
         };
         break;
 
-    // case 'asc':
-    //     for (let j = 0; j < bacaData.length; j++) {
-    //         let i = 1
-    //         i+= j
-    //         if (bacaData[i].tag = '[ ]'){
-    //             console.log(`${i}. ${bacaData[i].tag} ${bacaData[i].content}`)
-    //         }
-    //         };
-    //     break;
-
     case 'delete':
         console.log(`"${bacaData[index]['content']}" telah dihapus`)
         bacaData.splice(index, 1)
@@ -75,7 +65,35 @@ switch (process.argv[2]) {
         fs.writeFileSync('notepad.json', JSON.stringify(bacaData, null, 3))
         break;
 
+    case 'list:outstanding':
+        if (input[3] == 'asc')
+            for (let i = 0; i < bacaData.length; i++) {
+                if (bacaData[i].tag == '[ ]'){
+                    console.log(`${i + 1}. ${bacaData[i].tag} ${bacaData[i].content}`);
+                }
+            };
 
+        if (input[3] == 'desc')
+            for (let i = bacaData.length - 1; i >= 0; i--) {
+                if (bacaData[i].tag == '[ ]'){
+                console.log(`${i + 1}. ${bacaData[i].tag} ${bacaData[i].content}`);
+                }
+            };
+        break;
 
+    case 'list:completed':
+        if (input[3] == 'asc')
+            for (let i = 0; i < bacaData.length; i++) {
+                if (bacaData[i].tag == '[x]'){
+                    console.log(`${i + 1}. ${bacaData[i].tag} ${bacaData[i].content}`);
+                }
+            };
 
-}
+        if (input[3] == 'desc')
+            for (let i = bacaData.length - 1; i >= 0; i--) {
+                if (bacaData[i].tag == '[x]'){
+                console.log(`${i + 1}. ${bacaData[i].tag} ${bacaData[i].content}`);
+                }
+            };
+        break;
+};
