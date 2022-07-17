@@ -1,6 +1,9 @@
 const fs = require('fs')
 const input = process.argv;
-const data = JSON.parse(fs.readFileSync('data.json', 'utf-8'))
+const bacaData = JSON.parse(fs.readFileSync('notepad.json', 'utf-8'))
+
+let index = parseInt(input[3]) - 1
+
 
 
 switch (process.argv[2]) {
@@ -26,30 +29,53 @@ switch (process.argv[2]) {
         for (let i = 3; i < input.length; i++) {
             output += input[i] + ' '
         };
-        data.push({
+        bacaData.push({
             'status': false,
             'content': output,
-            'tag': []
+            'tag': '[ ]'
         })
-        fs.writeFileSync('data.json', JSON.stringify(data, null, 3))
+        fs.writeFileSync('notepad.json', JSON.stringify(bacaData, null, 3))
         console.log(`"${output}" telah ditambahkan`)
         break;
 
 
     case 'list':
-        for (let j = 0; j < data.length; j++) {
-            console.log(`${j + 1} . ${data[j].tag} ${data[j].content}`)
+        for (let i = 0; i < bacaData.length; i++) {
+            console.log(`${i + 1}. ${bacaData[i].tag} ${bacaData[i].content}`)
         };
         break;
 
+    // case 'asc':
+    //     for (let j = 0; j < bacaData.length; j++) {
+    //         let i = 1
+    //         i+= j
+    //         if (bacaData[i].tag = '[ ]'){
+    //             console.log(`${i}. ${bacaData[i].tag} ${bacaData[i].content}`)
+    //         }
+    //         };
+    //     break;
 
     case 'delete':
-        let index = parseInt(input[3]) - 1
-        let item = data[index]
-        console.log(`${item} telah dihapus`)
-        data.splice(index, 1)
-        
-        fs.writeFileSync('data.json', JSON.stringify(data, null, 3))
+        console.log(`"${bacaData[index]['content']}" telah dihapus`)
+        bacaData.splice(index, 1)
+        fs.writeFileSync('notepad.json', JSON.stringify(bacaData, null, 3))
         break;
+
+
+    case 'complete':
+        bacaData[index]['tag'] = '[x]'
+        console.log(`"${bacaData[index]['content']}" status selesai`)
+        fs.writeFileSync('notepad.json', JSON.stringify(bacaData, null, 3))
+        break;
+
+
+    case 'uncomplete':
+        bacaData[index]['tag'] = '[ ]'
+        console.log(`"${bacaData[index]['content']}" status selesai dibatalkan`)
+        fs.writeFileSync('notepad.json', JSON.stringify(bacaData, null, 3))
+        break;
+
+
+
 
 }
