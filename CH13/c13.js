@@ -19,7 +19,8 @@ switch (process.argv[2]) {
             "\n node todo.js tag <task_id> <tag_name_1> <tag_name_2> ... <tag_name_N>" +
             "\n node todo.js filter:<tag_name>"
         );
-        process.exit();
+        process.exit(0);
+
 
     case 'add':         //menambahkan
         let output = ' ';
@@ -27,38 +28,43 @@ switch (process.argv[2]) {
             output += input[i] + ' '
         };
         bacaData.push({
-            'tag': '',
+            'tag': [],
             'content': output,
             'cek': '[ ]'
         })
         fs.writeFileSync('notepad.json', JSON.stringify(bacaData, null, 3))
         console.log(`"${output}" telah ditambahkan`)
-        process.exit();
+        process.exit(0);
 
     case 'list':        //list biasa
         console.log('Daftar Pekerjaan')
         for (let i = 0; i < bacaData.length; i++) {
             console.log(`${i + 1}. ${bacaData[i].cek} ${bacaData[i].content}`)
         };
-        process.exit();
+        process.exit(0);
+
+    case 'task':        //memanggil task
+        console.log('Daftar Pekerjaan')
+        console.log(`${index + 1}. ${bacaData[index].cek} ${bacaData[index].content}`)
+        process.exit(0);
 
     case 'delete':      //menghapus
         console.log(`"${bacaData[index]['content']}" telah dihapus`)
         bacaData.splice(index, 1)
         fs.writeFileSync('notepad.json', JSON.stringify(bacaData, null, 3))
-        process.exit();
+        process.exit(0);
 
     case 'complete':    //ubah jadi selesai
         bacaData[index]['cek'] = '[x]'
         console.log(`"${bacaData[index]['content']}" status selesai`)
         fs.writeFileSync('notepad.json', JSON.stringify(bacaData, null, 3))
-        process.exit();
+        process.exit(0);
 
     case 'uncomplete':  //ubah cancel selesai
         bacaData[index]['cek'] = '[ ]'
         console.log(`"${bacaData[index]['content']}" status selesai dibatalkan`)
         fs.writeFileSync('notepad.json', JSON.stringify(bacaData, null, 3))
-        process.exit();
+        process.exit(0);
 
     case 'list:outstanding':    //list yang belum selesai
         console.log('Daftar Pekerjaan')
@@ -75,7 +81,7 @@ switch (process.argv[2]) {
                     console.log(`${i + 1}. ${bacaData[i].cek} ${bacaData[i].content}`);
                 }
             };
-        process.exit();
+        process.exit(0);
 
     case 'list:completed':  //list yang sudah selesai
         console.log('Daftar Pekerjaan')
@@ -92,17 +98,19 @@ switch (process.argv[2]) {
                     console.log(`${i + 1}. ${bacaData[i].cek} ${bacaData[i].content}`);
                 }
             };
-        process.exit();
+        process.exit(0);
 
-    case 'tag': //memberi tag atau tanda
-        let tagOut = '';
+
+    case 'tag':         //memberi tag atau tanda
         for (let i = 4; i < input.length; i++) {
-            tagOut += input[i] + ','
-        };
-        bacaData[index]['tag'] = tagOut
-        fs.writeFileSync('notepad.json', JSON.stringify(bacaData, null, 3))
-        console.log(`tag ${bacaData[index].tag} telah ditambahkan ke daftar "${bacaData[index].content}"`);
-        process.exit();
+            if (!bacaData[index].tag.includes(input[i])) {
+                bacaData[index].tag.push(input[i])
+            }
+        }
+        bacaData[index].tag.length - 1;
+        console.log(` tag '${bacaData[index].tag}' telah ditambahkan ke daftar ${bacaData[index].content}`);
+        fs.writeFileSync("notepad.json", JSON.stringify(bacaData, null, 3))
+        process.exit(0);
 
 };
 

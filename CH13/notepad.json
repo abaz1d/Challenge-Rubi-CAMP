@@ -1,17 +1,30 @@
 [
    {
-      "tag": " masak,sayur,",
-      "content": " saya akan makan ",
+      "tag": [
+         "masak",
+         "savur"
+      ],
+      "content": " saya akan tidur ",
       "cek": "[ ]"
    },
    {
-      "content": " saya akan duduk ",
-      "cek": "[ ]",
-      "tag": "kerja,sibuk,"
+      "tag": [],
+      "content": "sayaakanmakan",
+      "cek": "[ ]"
    },
    {
-      "tag": " kerja,",
-      "content": " saya akan ngoding ",
-      "cek": "[x]"
+      "tag": [],
+      "content": "sayaakanmakan",
+      "cek": "[ ]"
+   },
+   {
+      "tag": [],
+      "content": "sayaakanmakan",
+      "cek": "[ ]"
+   },
+   {
+      "tag": [],
+      "content": "sayaakanmakan",
+      "cek": "[ ]"
    }
 ]
