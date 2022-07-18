@@ -1,10 +1,7 @@
 const fs = require('fs')
 const input = process.argv;
 const bacaData = JSON.parse(fs.readFileSync('notepad.json', 'utf-8'))
-
 let index = parseInt(input[3]) - 1
-
-
 
 switch (process.argv[2]) {
     case undefined:
@@ -25,7 +22,7 @@ switch (process.argv[2]) {
         break;
 
     case 'add':
-        let output = '';
+        let output = ' ';
         for (let i = 3; i < input.length; i++) {
             output += input[i] + ' '
         };
@@ -38,8 +35,8 @@ switch (process.argv[2]) {
         console.log(`"${output}" telah ditambahkan`)
         break;
 
-
     case 'list':
+        console.log('Daftar Pekerjaan')
         for (let i = 0; i < bacaData.length; i++) {
             console.log(`${i + 1}. ${bacaData[i].tag} ${bacaData[i].content}`)
         };
@@ -51,13 +48,11 @@ switch (process.argv[2]) {
         fs.writeFileSync('notepad.json', JSON.stringify(bacaData, null, 3))
         break;
 
-
     case 'complete':
         bacaData[index]['tag'] = '[x]'
         console.log(`"${bacaData[index]['content']}" status selesai`)
         fs.writeFileSync('notepad.json', JSON.stringify(bacaData, null, 3))
         break;
-
 
     case 'uncomplete':
         bacaData[index]['tag'] = '[ ]'
@@ -66,34 +61,47 @@ switch (process.argv[2]) {
         break;
 
     case 'list:outstanding':
+        console.log('Daftar Pekerjaan')
         if (input[3] == 'asc')
             for (let i = 0; i < bacaData.length; i++) {
-                if (bacaData[i].tag == '[ ]'){
+                if (bacaData[i].tag == '[ ]') {
                     console.log(`${i + 1}. ${bacaData[i].tag} ${bacaData[i].content}`);
                 }
             };
 
         if (input[3] == 'desc')
             for (let i = bacaData.length - 1; i >= 0; i--) {
-                if (bacaData[i].tag == '[ ]'){
-                console.log(`${i + 1}. ${bacaData[i].tag} ${bacaData[i].content}`);
+                if (bacaData[i].tag == '[ ]') {
+                    console.log(`${i + 1}. ${bacaData[i].tag} ${bacaData[i].content}`);
                 }
             };
         break;
 
     case 'list:completed':
+        console.log('Daftar Pekerjaan')
         if (input[3] == 'asc')
             for (let i = 0; i < bacaData.length; i++) {
-                if (bacaData[i].tag == '[x]'){
+                if (bacaData[i].tag == '[x]') {
                     console.log(`${i + 1}. ${bacaData[i].tag} ${bacaData[i].content}`);
                 }
             };
 
         if (input[3] == 'desc')
             for (let i = bacaData.length - 1; i >= 0; i--) {
-                if (bacaData[i].tag == '[x]'){
-                console.log(`${i + 1}. ${bacaData[i].tag} ${bacaData[i].content}`);
+                if (bacaData[i].tag == '[x]') {
+                    console.log(`${i + 1}. ${bacaData[i].tag} ${bacaData[i].content}`);
                 }
             };
+        break;
+
+    case 'tag':
+        for (let i = 4; i < input.length; i++) {
+            if (!data[index].tag.includes(input[i])) {
+                data[index].tag.push(input[i])
+            }
+        }
+        let coba = data[index].tag.length - 1;
+        console.log(data[index].tag + ' ' + "telah ditambahkan ke daftar" + ' ' + data[index].task_content);
+        fs.writeFileSync("notepad.json", JSON.stringify(data, null, 3))
         break;
 };
