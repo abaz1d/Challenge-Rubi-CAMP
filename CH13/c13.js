@@ -19,89 +19,106 @@ switch (process.argv[2]) {
             "\n node todo.js tag <task_id> <tag_name_1> <tag_name_2> ... <tag_name_N>" +
             "\n node todo.js filter:<tag_name>"
         );
-        break;
+        process.exit();
 
-    case 'add':
+    case 'add':         //menambahkan
         let output = ' ';
         for (let i = 3; i < input.length; i++) {
             output += input[i] + ' '
         };
         bacaData.push({
-            'status': false,
+            'tag': '',
             'content': output,
-            'tag': '[ ]'
+            'cek': '[ ]'
         })
         fs.writeFileSync('notepad.json', JSON.stringify(bacaData, null, 3))
         console.log(`"${output}" telah ditambahkan`)
-        break;
+        process.exit();
 
-    case 'list':
+    case 'list':        //list biasa
         console.log('Daftar Pekerjaan')
         for (let i = 0; i < bacaData.length; i++) {
-            console.log(`${i + 1}. ${bacaData[i].tag} ${bacaData[i].content}`)
+            console.log(`${i + 1}. ${bacaData[i].cek} ${bacaData[i].content}`)
         };
-        break;
+        process.exit();
 
-    case 'delete':
+    case 'delete':      //menghapus
         console.log(`"${bacaData[index]['content']}" telah dihapus`)
         bacaData.splice(index, 1)
         fs.writeFileSync('notepad.json', JSON.stringify(bacaData, null, 3))
-        break;
+        process.exit();
 
-    case 'complete':
-        bacaData[index]['tag'] = '[x]'
+    case 'complete':    //ubah jadi selesai
+        bacaData[index]['cek'] = '[x]'
         console.log(`"${bacaData[index]['content']}" status selesai`)
         fs.writeFileSync('notepad.json', JSON.stringify(bacaData, null, 3))
-        break;
+        process.exit();
 
-    case 'uncomplete':
-        bacaData[index]['tag'] = '[ ]'
+    case 'uncomplete':  //ubah cancel selesai
+        bacaData[index]['cek'] = '[ ]'
         console.log(`"${bacaData[index]['content']}" status selesai dibatalkan`)
         fs.writeFileSync('notepad.json', JSON.stringify(bacaData, null, 3))
-        break;
+        process.exit();
 
-    case 'list:outstanding':
+    case 'list:outstanding':    //list yang belum selesai
         console.log('Daftar Pekerjaan')
-        if (input[3] == 'asc')
+        if (input[3] == 'asc')  //dari lama ke sebentar
             for (let i = 0; i < bacaData.length; i++) {
-                if (bacaData[i].tag == '[ ]') {
-                    console.log(`${i + 1}. ${bacaData[i].tag} ${bacaData[i].content}`);
+                if (bacaData[i].cek == '[ ]') {
+                    console.log(`${i + 1}. ${bacaData[i].cek} ${bacaData[i].content}`);
                 }
             };
 
-        if (input[3] == 'desc')
+        if (input[3] == 'desc') //dari sebentar ke lama
             for (let i = bacaData.length - 1; i >= 0; i--) {
-                if (bacaData[i].tag == '[ ]') {
-                    console.log(`${i + 1}. ${bacaData[i].tag} ${bacaData[i].content}`);
+                if (bacaData[i].cek == '[ ]') {
+                    console.log(`${i + 1}. ${bacaData[i].cek} ${bacaData[i].content}`);
                 }
             };
-        break;
+        process.exit();
 
-    case 'list:completed':
+    case 'list:completed':  //list yang sudah selesai
         console.log('Daftar Pekerjaan')
-        if (input[3] == 'asc')
+        if (input[3] == 'asc')  //dari lama ke sebentar
             for (let i = 0; i < bacaData.length; i++) {
-                if (bacaData[i].tag == '[x]') {
-                    console.log(`${i + 1}. ${bacaData[i].tag} ${bacaData[i].content}`);
+                if (bacaData[i].cek == '[x]') {
+                    console.log(`${i + 1}. ${bacaData[i].cek} ${bacaData[i].content}`);
                 }
             };
 
-        if (input[3] == 'desc')
+        if (input[3] == 'desc') //dari sebentar ke lama
             for (let i = bacaData.length - 1; i >= 0; i--) {
-                if (bacaData[i].tag == '[x]') {
-                    console.log(`${i + 1}. ${bacaData[i].tag} ${bacaData[i].content}`);
+                if (bacaData[i].cek == '[x]') {
+                    console.log(`${i + 1}. ${bacaData[i].cek} ${bacaData[i].content}`);
                 }
             };
-        break;
+        process.exit();
 
-    case 'tag':
+    case 'tag': //memberi tag atau tanda
+        let tagOut = '';
         for (let i = 4; i < input.length; i++) {
-            if (!data[index].tag.includes(input[i])) {
-                data[index].tag.push(input[i])
-            }
-        }
-        let coba = data[index].tag.length - 1;
-        console.log(data[index].tag + ' ' + "telah ditambahkan ke daftar" + ' ' + data[index].task_content);
-        fs.writeFileSync("notepad.json", JSON.stringify(data, null, 3))
-        break;
+            tagOut += input[i] + ','
+        };
+        bacaData[index]['tag'] = tagOut
+        fs.writeFileSync('notepad.json', JSON.stringify(bacaData, null, 3))
+        console.log(`tag ${bacaData[index].tag} telah ditambahkan ke daftar "${bacaData[index].content}"`);
+        process.exit();
+
 };
+
+
+filtering(process.argv[2])
+
+function filtering() { //fungsi untuk Filter
+    console.log('Daftar Pekerjaan')
+    let kata = process.argv[2]
+    let kata2 = kata.slice(0, 7)
+    if (kata2 == 'filter:') {
+        bacaData.map((item, index) => {
+            if (item.tag.includes(kata.slice(7))) {
+                console.log(`${index + 1}. ${item.cek} ${item.content}`);
+            }
+        })
+    };
+};
+

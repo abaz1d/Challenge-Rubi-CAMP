@@ -1,32 +1,17 @@
 [
    {
-      "status": false,
-      "content": "eril ",
-      "tag": "[x]"
+      "tag": " masak,sayur,",
+      "content": " saya akan makan ",
+      "cek": "[ ]"
    },
    {
-      "status": false,
-      "content": "zakka ",
-      "tag": "[ ]"
+      "content": " saya akan duduk ",
+      "cek": "[ ]",
+      "tag": "kerja,sibuk,"
    },
    {
-      "status": false,
-      "content": "emir ",
-      "tag": "[x]"
-   },
-   {
-      "status": false,
-      "content": "bambang ",
-      "tag": "[ ]"
-   },
-   {
-      "status": false,
-      "content": "abaz ",
-      "tag": "[x]"
-   },
-   {
-      "status": false,
-      "content": " saya akan tidur ",
-      "tag": "[ ]"
+      "tag": " kerja,",
+      "content": " saya akan ngoding ",
+      "cek": "[x]"
    }
 ]
