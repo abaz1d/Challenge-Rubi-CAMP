@@ -1,2 +1,3 @@
 # Challenge-Rubi-CAMP
-Challenge in RubiCAMP batch-31
+Challenge in RubiCAMP batch-31 tahun 2022
+
