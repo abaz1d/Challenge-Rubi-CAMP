@@ -108,7 +108,7 @@ WHERE  umur < 20; --2
 SELECT mahasiswa.nim, mahasiswa.nama, rapot.nilai 
 FROM mahasiswa 
 JOIN rapot ON rapot.nim=mahasiswa.nim 
-WHERE nilai='B' or nilai='A';--3
+WHERE nilai like 'B%' or nilai like 'A%';--3
 
 SELECT mahasiswa.nama, rapot.nim, SUM(mataKuliah.sks) 
 FROM rapot 
