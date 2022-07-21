@@ -15,7 +15,6 @@ function sentenceManipulation(word) {
             //  array.push(x[y]);
             string = string + ' ' + x[y]
         }
-
     }
     console.log(string);
     //  console.log(array);
