@@ -16,8 +16,8 @@ if (process.argv[2] === undefined) {
     });
 
     // insialisasi 
-    const dataBase = fs.readFileSync(process.argv[2], 'utf-8')
-    let isiData = JSON.parse(dataBase)
+    
+    let isiData = JSON.parse(fs.readFileSync(process.argv[2], 'utf-8'))
     let indeks = 0
     let percobaan = 0
     console.log('Pertanyaan  : ' + isiData[indeks].definition)                    // menampilkan pertanyaan 1
