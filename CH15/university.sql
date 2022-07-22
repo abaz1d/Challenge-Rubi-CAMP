@@ -84,6 +84,10 @@ INSERT INTO rapot('nim','kodeMatkul','nip','nilai') VALUES
 ('2022070006','MK04','D2204','B+'),
 ('2022070005','MK01','D2203','C+');
 
+UPDATE rapot SET nilai = 'D+' WHERE kodeMatkul = 'MK01';
+UPDATE rapot SET nilai = 'E-' WHERE nip = 'D2204';
+UPDATE mataKuliah SET namaMatkul = 'data mining' WHERE kodeMatkul = 'MK01';
+
 ALTER TABLE mahasiswa ADD dob date ;
 UPDATE mahasiswa SET dob = '2002-09-12' WHERE nama = 'Abaz';
 UPDATE mahasiswa SET dob = '2001-11-30' WHERE nama = 'Faisal';
@@ -121,7 +125,7 @@ SELECT mahasiswa.nama, rapot.nim, mataKuliah.namaMatkul
 FROM rapot 
 JOIN mahasiswa ON mahasiswa.nim=rapot.nim 
 JOIN mataKuliah ON mataKuliah.kodeMatkul=rapot.kodeMatkul 
-WHERE mataKuliah.namaMatkul='gambar teknik';--5 saya ganti data mining jadi gambar teknik
+WHERE mataKuliah.namaMatkul='data mining';--5 
 
 SELECT rapot.nip, dosen.namaDosen, COUNT( DISTINCT rapot.nim),mahasiswa.nama 
 FROM rapot 
@@ -134,9 +138,8 @@ SELECT mahasiswa.nama, mahasiswa.dob,
 FROM mahasiswa 
 ORDER BY umur ASC; --7
 
---8 
 SELECT * 
 FROM rapot 
 JOIN dosen ON dosen.nip=rapot.nip 
 JOIN mahasiswa ON mahasiswa.nim=rapot.nim 
-WHERE nilai like 'B%' or nilai like 'C%'; -- maaf kang tidak ada yang mendapat nilai D/E
+WHERE nilai like 'D%' or nilai like 'E%'; --8
