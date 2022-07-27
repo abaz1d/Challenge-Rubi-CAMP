@@ -25,7 +25,7 @@ class CarFactory {
             this.cars.push(car2)
             B++
         }
-        console.log(`pada tahun ${year} perusahaan ${this.brand1} memproduksi sebanyak ${A} mobil, sedangkan perusahaan ${this.brand2} memproduksi sebanyak ${B} mobil`)
+        console.log(`Pada tahun ${year}, perusahaan ${this.brand1} memproduksi sebanyak ${A} mobil, sedangkan perusahaan ${this.brand2} memproduksi sebanyak ${B} mobil`)
     }
 
     static generateUUID() {
