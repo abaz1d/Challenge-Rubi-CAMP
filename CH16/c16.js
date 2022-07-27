@@ -19,7 +19,7 @@ class CarFactory {
         }
 
         let B = 0;
-        for (let i = 0; i < CarFactory.random(); i++){
+        for (let i = 0; i < CarFactory.random(); i++) {
             const car2 = new Sigra(year);
 
             this.cars.push(car2)
@@ -92,7 +92,7 @@ class Sigra extends Car {
     }
 }
 
-let crew = new CarFactory('Toyota', 'Daihatsu');
+let comp = new CarFactory('Toyota', 'Daihatsu');
 let date = (Math.floor(Math.random() * 15) + 2020)
-crew.produksi(date);
-crew.garansi(date)
+comp.produksi(date);
+comp.garansi(date)
