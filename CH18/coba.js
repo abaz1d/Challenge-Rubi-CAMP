@@ -1,8 +1,8 @@
 //======================================================================
-//Mahasiswa
+//Kontrak
 class Kontrak {
     static MenuKontrak() {
-        Greet.MenuKontrak()
+        Greet.menuKontrak()
         rl.question('Masukkan salah satu nomor dari opsi di atas : ', (opsi) => {
             switch (opsi) {
                 case '1': //Daftar Kontrak
