@@ -1,16 +1,13 @@
-// const readline = require('readline');
-// const sqlite3 = require('sqlite3');
-// const Table = require('cli-table');
 import readline from 'readline'
 import sqlite3 from 'sqlite3';
 
-import Greet from './View/View.js';
-import { users } from './Controller/Controller.js';
-import { Mahasiswa } from './Controller/Controller.js';
-import { Jurusan } from './Controller/Controller.js';
-import { Dosen } from './Controller/Controller.js';
-import { Matkul } from './Controller/Controller.js';
-import { Kontrak } from './Controller/Controller.js';
+import ViewLogin from './View/ViewLogin.js';
+import users from './Controller/ContLogin.js';
+import Mahasiswa from './Controller/ContMahasiswa.js';
+import Jurusan from './Controller/ContJurusan.js';
+import Dosen from './Controller/ContDosen.js';
+import Matkul from './Controller/ContMatkul.js';
+import Kontrak from './Controller/ContKontrak.js';
 
 export const rl = readline.createInterface({
     input: process.stdin,
@@ -28,12 +25,12 @@ export const db = new sqlite3.Database('university.db', sqlite3.OPEN_READWRITE, 
 //Utama
 export default class Utama {
     static login() {
-        Greet.welcome()
+        ViewLogin.welcome()
         users.username()
     }
 
     static home() {
-        Greet.home();
+        ViewLogin.home();
         rl.question('Masukan salah satu nomor dari opsi diatas : ', (opsi) => {
             switch (opsi) {
 
@@ -54,7 +51,7 @@ export default class Utama {
                     Kontrak.MenuKontrak()
                     break;
                 case '6': //Keluar
-                    Greet.logout()
+                    ViewLogin.logout()
                     Utama.login()
             }
         })
