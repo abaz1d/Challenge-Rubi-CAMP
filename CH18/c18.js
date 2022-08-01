@@ -289,7 +289,7 @@ class Jurusan {
         });
         db.all('SELECT * FROM jurusan', (err, data) => {
             if (err) {
-                console.log('gagal mengambil data jurusan', err)
+                console.log('gagal mengambil database jurusan', err)
                 process.exit(1)
             }
 
@@ -308,7 +308,7 @@ class Jurusan {
         rl.question('Masukkan Kode Jurusan : ', (kodeJurusan) => {
             db.all('SELECT * FROM jurusan WHERE jurusan.kodeJurusan = ?', [kodeJurusan], (err, data) => {
                 if (err) {
-                    console.log('gagal ambil data jurusan', err)
+                    console.log('gagal ambil database jurusan', err)
                     process.exit(1)
                 }
                 if (data.length == 0) {
@@ -333,10 +333,10 @@ Nama Jurusan : ${data[0].namaJurusan}
             rl.question('Nama Jurusan : ', (namaJurusan) => {
                 db.run('INSERT INTO jurusan VALUES (?, ?)', [kodeJurusan, namaJurusan], (err) => {
                     if (err) {
-                        console.log('gagal menambah jurusan', err)
+                        console.log('gagal menambah database jurusan', err)
                         process.exit(1)
                     } else {
-                        console.log('jurusan telah ditambahkan')
+                        console.log('jurusan telah ditambahkan ke database')
                         Jurusan.daftarJurusan()
                     }
                 })
@@ -351,7 +351,7 @@ Nama Jurusan : ${data[0].namaJurusan}
         rl.question('Masukkan Kode Jurusan : ', (kodeJurusan) => {
             db.all('DELETE FROM jurusan WHERE jurusan.kodeJurusan = ?', [kodeJurusan], (err) => {
                 if (err) {
-                    console.log('gagal ambil jurusan', err)
+                    console.log('gagal menghapus database jurusan', err)
                     process.exit(1)
                 }
                 else {
@@ -396,7 +396,7 @@ class Dosen {
         });
         db.all('SELECT * FROM dosen', (err, data) => {
             if (err) {
-                console.log('gagal mengambil data dosen', err)
+                console.log('gagal mengambil database dosen', err)
                 process.exit(1)
             }
 
@@ -412,19 +412,19 @@ class Dosen {
     }
 
     static cariDosen() {
-        rl.question('Masukkan Kode Dosen : ', (nip) => {
+        rl.question('Masukkan NIP Dosen : ', (nip) => {
             db.all('SELECT * FROM dosen WHERE dosen.nip = ?', [nip], (err, data) => {
                 if (err) {
-                    console.log('gagal ambil data dosen', err)
+                    console.log('gagal ambil database dosen', err)
                     process.exit(1)
                 }
                 if (data.length == 0) {
-                    console.log(`Dosen dengan kode ${nip}, tidak terdaftar`)
+                    console.log(`Dosen dengan NIP ${nip}, tidak terdaftar`)
                     Dosen.MenuDosen()
                 } else {
                     console.log(`
 ========================================
-Detail Dosen dengan Kode '${nip}' :
+Detail Dosen dengan NIP '${nip}' :
 NIP        : ${data[0].nip}
 Nama Dosen : ${data[0].namaDosen}
             `);
@@ -440,10 +440,10 @@ Nama Dosen : ${data[0].namaDosen}
             rl.question('Nama Dosen :', (namaDosen) => {
                 db.run('INSERT INTO dosen VALUES (?, ?)', [nip, namaDosen], (err) => {
                     if (err) {
-                        console.log('gagal menambah Dosen', err)
+                        console.log('gagal menambah database Dosen', err)
                         process.exit(1)
                     } else {
-                        console.log('Dosen telah ditambahkan')
+                        console.log('Dosen baru telah ditambahkan ke database')
                         Dosen.daftarDosen()
                     }
                 })
