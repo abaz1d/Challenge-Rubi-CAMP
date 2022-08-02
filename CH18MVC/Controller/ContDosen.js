@@ -29,12 +29,12 @@ export default class Dosen {
         })
     }
 
-    static daftarDosen() {
+    static daftarDosen(callback) {
         const tableDosen = new Table({
             head: ['NIP', 'Nama Dosen']
             , colWidths: [15, 20]
         });
-        ModelDosen.daftarDsn ((err, data) => {
+        ModelDosen.daftarDsn((err, data) => {
             if (err) {
                 console.log('gagal mengambil database dosen', err)
                 process.exit(1)
@@ -47,7 +47,10 @@ export default class Dosen {
                 ])
             })
             console.log(tableDosen.toString())
-            Dosen.MenuDosen()
+            if (callback)
+                callback()
+            else
+                Dosen.MenuDosen()
         })
     }
 
@@ -76,22 +79,21 @@ Nama Dosen : ${data[0].namaDosen}
 
     static tambahDosen() {
         console.log('Lengkapi data di bawah ini : ')
-        rl.question('NIP :', (nip) => {
-            rl.question('Nama Dosen :', (namaDosen) => {
-                ModelDosen.tambahDsn(nip, namaDosen, (err) => {
-                    if (err) {
-                        console.log('gagal menambah database Dosen', err)
-                        process.exit(1)
-                    } else {
-                        console.log('Dosen baru telah ditambahkan ke database')
-                        Dosen.daftarDosen()
-                    }
+        Dosen.daftarDosen(() => {
+            rl.question('NIP :', (nip) => {
+                rl.question('Nama Dosen :', (namaDosen) => {
+                    ModelDosen.tambahDsn(nip, namaDosen, (err) => {
+                        if (err) {
+                            console.log('gagal menambah database Dosen', err)
+                            process.exit(1)
+                        } else {
+                            console.log('Dosen baru telah ditambahkan ke database')
+                            Dosen.daftarDosen()
+                        }
+                    })
                 })
             })
         })
-
-
-
     }
 
     static hapusDosen() {

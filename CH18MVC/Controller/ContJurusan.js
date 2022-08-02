@@ -30,16 +30,17 @@ export default class Jurusan {
         })
     }
 
-    static daftarJurusan() {
-        const tableJurusan = new Table({
-            head: ['Kode Jurusan', 'Nama Jurusan']
-            , colWidths: [15, 20]
-        });
-        ModelJurusan.daftarJrsn ((err, data) => {
+    static daftarJurusan(callback) {
+        ModelJurusan.daftarJrsn((err, data) => {
             if (err) {
                 console.log('gagal mengambil database jurusan', err)
                 process.exit(1)
             }
+
+            const tableJurusan = new Table({
+                head: ['Kode Jurusan', 'Nama Jurusan']
+                , colWidths: [15, 20]
+            });
 
             data.forEach(item => {
                 tableJurusan.push([
@@ -48,7 +49,11 @@ export default class Jurusan {
                 ])
             })
             console.log(tableJurusan.toString())
-            Jurusan.MenuJurusan()
+            if (callback)
+                callback()
+            else
+                Jurusan.MenuJurusan()
+
         })
     }
 
@@ -77,22 +82,21 @@ Nama Jurusan : ${data[0].namaJurusan}
 
     static tambahJurusan() {
         console.log('Lengkapi data di bawah ini : ')
-        rl.question('Kode Jurusan: ', (kodeJurusan) => {
-            rl.question('Nama Jurusan : ', (namaJurusan) => {
-                ModelJurusan.tambahJrsn(kodeJurusan, namaJurusan, (err) => {
-                    if (err) {
-                        console.log('gagal menambah database jurusan', err)
-                        process.exit(1)
-                    } else {
-                        console.log('jurusan telah ditambahkan ke database')
-                        Jurusan.daftarJurusan()
-                    }
+        Jurusan.daftarJurusan(() => {
+            rl.question('Kode Jurusan: ', (kodeJurusan) => {
+                rl.question('Nama Jurusan : ', (namaJurusan) => {
+                    ModelJurusan.tambahJrsn(kodeJurusan, namaJurusan, (err) => {
+                        if (err) {
+                            console.log('gagal menambah database jurusan', err)
+                            process.exit(1)
+                        } else {
+                            console.log('jurusan telah ditambahkan ke database')
+                            Jurusan.daftarJurusan()
+                        }
+                    })
                 })
             })
         })
-
-
-
     }
 
     static hapusJurusan() {

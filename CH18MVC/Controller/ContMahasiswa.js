@@ -2,6 +2,7 @@ import ViewMahasiswa from '../View/ViewMahasiswa.js';
 import Utama, { rl } from '../c18.js';
 import Table from 'cli-table';
 import ModelMahasiswa from '../Model/ModelMahasiswa.js';
+import Jurusan from './ContJurusan.js';
 
 
 //================================================================================================================
@@ -30,12 +31,12 @@ export default class Mahasiswa {
         })
     }
 
-    static daftarMahasiswa() {
+    static daftarMahasiswa(callback) {
         const tableMahasiswa = new Table({
             head: ['NIM', 'Nama', 'Tanggal Lahir', 'Alamat', 'Kode Jurusan']
-            , colWidths: [20, 10, 15, 15, 15]
+            , colWidths: [15, 20, 15, 15, 15]
         });
-        ModelMahasiswa.daftarMhs ((err, data) => {
+        ModelMahasiswa.daftarMhs((err, data) => {
             if (err) {
                 console.log('gagal ambil mahasiswa', err)
                 process.exit(1)
@@ -51,7 +52,11 @@ export default class Mahasiswa {
                 ])
             })
             console.log(tableMahasiswa.toString())
-            Mahasiswa.MenuMahasiswa()
+            if (callback)
+                callback()
+            else
+                Mahasiswa.MenuMahasiswa()
+
         })
     }
 
@@ -82,19 +87,23 @@ Jurusan : ${data[0].kodeJurusan}
 
     static tambahMahasiswa() {
         console.log('Lengkapi data di bawah ini : ')
-        rl.question('NIM :', (nim) => {
-            rl.question('Nama: ', (nama) => {
-                rl.question('Alamat: ', (alamat) => {
-                    rl.question('Jurusan: ', (kodeJurusan) => {
-                        rl.question('Tanggal Lahir: ', (dob) => {
-                            ModelMahasiswa.tambahMhs(nim, nama, alamat, kodeJurusan, dob, (err) => {
-                                if (err) {
-                                    console.log('gagal menambah mahasiswa mahasiswa', err)
-                                    process.exit(1)
-                                } else {
-                                    console.log('mahasiswa telah ditambahkan')
-                                    Mahasiswa.daftarMahasiswa()
-                                }
+        Mahasiswa.daftarMahasiswa(() => {
+            rl.question('NIM :', (nim) => {
+                rl.question('Nama: ', (nama) => {
+                    rl.question('Tanggal Lahir: ', (dob) => {
+                        rl.question('Alamat: ', (alamat) => {
+                            Jurusan.daftarJurusan(() => {
+                                rl.question('Kode Jurusan: ', (kodeJurusan) => {
+                                    ModelMahasiswa.tambahMhs(nim, nama, alamat, kodeJurusan, dob, (err) => {
+                                        if (err) {
+                                            console.log('gagal menambah mahasiswa mahasiswa', err)
+                                            process.exit(1)
+                                        } else {
+                                            console.log('mahasiswa telah ditambahkan')
+                                            Mahasiswa.daftarMahasiswa()
+                                        }
+                                    })
+                                })
                             })
                         })
                     })

@@ -30,12 +30,12 @@ export default class Matkul {
         })
     }
 
-    static daftarMatkul() {
+    static daftarMatkul(callback) {
         const tableMatkul = new Table({
             head: ['Kode Matkul', 'Nama Matkul', 'SKS']
             , colWidths: [15, 20, 5]
         });
-        ModelMatkul.daftarMk ((err, data) => {
+        ModelMatkul.daftarMk((err, data) => {
             if (err) {
                 console.log('gagal mengambil data Mata Kuliah', err)
                 process.exit(1)
@@ -49,7 +49,10 @@ export default class Matkul {
                 ])
             })
             console.log(tableMatkul.toString())
-            Matkul.MenuMatkul()
+            if (callback)
+                callback()
+            else
+                Matkul.MenuMatkul()
         })
     }
 
@@ -79,24 +82,23 @@ SKS         : ${data[0].sks}
 
     static tambahMatkul() {
         console.log('Lengkapi data di bawah ini : ')
-        rl.question('kodeMatkul :', (kodeMatkul) => {
-            rl.question('Nama Matkul :', (namaMatkul) => {
-                rl.question('SKS :', (sks) => {
-                    ModelMatkul.tambahMk(kodeMatkul, namaMatkul, sks, (err) => {
-                        if (err) {
-                            console.log('gagal menambah Matkul', err)
-                            process.exit(1)
-                        } else {
-                            console.log('Matkul telah ditambahkan')
-                            Matkul.daftarMatkul()
-                        }
+        Matkul.daftarMatkul(() => {
+            rl.question('kodeMatkul :', (kodeMatkul) => {
+                rl.question('Nama Matkul :', (namaMatkul) => {
+                    rl.question('SKS :', (sks) => {
+                        ModelMatkul.tambahMk(kodeMatkul, namaMatkul, sks, (err) => {
+                            if (err) {
+                                console.log('gagal menambah Matkul', err)
+                                process.exit(1)
+                            } else {
+                                console.log('Matkul telah ditambahkan')
+                                Matkul.daftarMatkul()
+                            }
+                        })
                     })
                 })
             })
         })
-
-
-
     }
 
     static hapusMatkul() {

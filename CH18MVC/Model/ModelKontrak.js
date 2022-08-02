@@ -1,12 +1,12 @@
 import { db } from "../c18.js";
 
 
-export default class ModelKontrak{
+export default class ModelKontrak {
     static daftarKt(callback) {
         db.all('SELECT * FROM rapot', (err, data) => {
             callback(err, data)
         })
-    
+
     }
 
     static cariKt(ID, callback) {
@@ -15,8 +15,8 @@ export default class ModelKontrak{
         })
     }
 
-    static tambahKt(ID, nim, kodeMatkul, nip, nilai, callback) {
-        db.run('INSERT INTO rapot VALUES (?, ?, ?, ?, ?)', [ID, nim, kodeMatkul, nip, nilai], (err) => {
+    static tambahKt(nim, kodeMatkul, nip, callback) {
+        db.run('INSERT INTO rapot (nim, kodeMatkul, nip) VALUES (?, ?, ?)', [nim, kodeMatkul, nip], (err) => {
             callback(err)
         })
     }
@@ -26,4 +26,17 @@ export default class ModelKontrak{
             callback(err)
         })
     }
+
+    static updateKt(nim, callback) {
+        db.all('SELECT rapot.ID, mataKuliah.namaMatkul, rapot.nilai FROM rapot JOIN mataKuliah ON mataKuliah.kodeMatkul=rapot.kodeMatkul WHERE rapot.nim = ?', [nim], (err, data) => {
+            callback(err, data)
+        })
+
+    }
+
+    static upNilai(nilai, ID, callback) {
+        db.run('UPDATE rapot SET nilai = ? WHERE ID = ?', [nilai, ID], (err) => {
+        callback(err)
+    })
+}
 }

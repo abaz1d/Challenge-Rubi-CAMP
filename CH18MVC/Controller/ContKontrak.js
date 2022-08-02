@@ -23,19 +23,22 @@ export default class Kontrak {
                 case '4': //Hapus Kontrak
                     Kontrak.hapusKontrak()
                     break;
-                case '5': //Kembali
+                case '5': //Update Nilai
+                    Kontrak.updateNilai()
+                    break;
+                case '6': //Kembali
                     Utama.home()
                     break;
             }
         })
     }
 
-    static daftarKontrak() {
+    static daftarKontrak(callback) {
         const tableKontrak = new Table({
             head: ['ID', 'NIM', 'Kode Mata Kuliah', 'NIP', 'Nilai']
             , colWidths: [5, 15, 10, 15, 10]
         });
-        ModelKontrak.daftarKt ((err, data) => {
+        ModelKontrak.daftarKt((err, data) => {
             if (err) {
                 console.log('gagal ambil rapot', err)
                 process.exit(1)
@@ -47,11 +50,14 @@ export default class Kontrak {
                     item.nim,
                     item.kodeMatkul,
                     item.nip,
-                    item.nilai
+                    item.nilai == null ? ' ' : item.nilai
                 ])
             })
             console.log(tableKontrak.toString())
-            Kontrak.MenuKontrak()
+            if (callback)
+                callback()
+            else
+                Kontrak.MenuKontrak()
         })
     }
 
@@ -82,20 +88,18 @@ Nilai             : ${data[0].nilai}
 
     static tambahKontrak() {
         console.log('Lengkapi data di bawah ini : ')
-        rl.question('ID :', (ID) => {
+        Kontrak.daftarKontrak(() => {
             rl.question('NIM: ', (nim) => {
                 rl.question('Kode Mata Kuliah: ', (kodeMatkul) => {
                     rl.question('NIP: ', (nip) => {
-                        rl.question('NILAI: ', (nilai) => {
-                            ModelKontrak.tambahKt(ID, nim, kodeMatkul, nip, nilai, (err) => {
-                                if (err) {
-                                    console.log('gagal menambah kontrak mahasiswa', err)
-                                    process.exit(1)
-                                } else {
-                                    console.log('kontrak telah ditambahkan')
-                                    Kontrak.daftarKontrak()
-                                }
-                            })
+                        ModelKontrak.tambahKt(nim, kodeMatkul, nip, (err) => {
+                            if (err) {
+                                console.log('gagal menambah kontrak mahasiswa', err)
+                                process.exit(1)
+                            } else {
+                                console.log('kontrak telah ditambahkan')
+                                Kontrak.daftarKontrak()
+                            }
                         })
                     })
                 })
@@ -114,6 +118,56 @@ Nilai             : ${data[0].nilai}
                     console.log(`Data Kontrak Mahasiswa ${ID}, telah dihapus`);
                     Kontrak.MenuKontrak()
                 }
+            })
+        })
+    }
+
+    static updateNilai(callback) {
+        Kontrak.daftarKontrak(() => {
+            rl.question('Masukkan nim Mahasiswa : ', (nim) => {
+                ModelKontrak.updateKt(nim, (err, data) => {
+                    if (err) {
+                        console.log('gagal ambil rapot', err)
+                        process.exit(1)
+                    }
+
+                    if (data.length == 0) {
+                        console.log(`Mahasiswa dengan NIM ${nim}, tidak terdaftar`)
+                        Kontrak.MenuKontrak()
+                    } else {
+                        ViewKontrak.line()
+                        console.log(`Detail mahasiswa dengan NIM '${nim}' :`)
+                        const tableKontrak = new Table({
+                            head: ['ID', 'Mata Kuliah', 'Nilai']
+                            , colWidths: [5, 15, 10]
+                        })
+
+                        data.forEach(item => {
+                            tableKontrak.push([
+                                item.ID,
+                                item.namaMatkul,
+                                item.nilai == null ? ' ' : item.nilai
+                            ])
+                        })
+                        console.log(tableKontrak.toString())
+                    }
+
+                    ViewKontrak.line()
+                    rl.question('masukan id yang akan dirubah nilainya : ', (ID) => {
+                        ViewKontrak.line()
+                        rl.question('tulis nilai yang baru : ', (nilai) => {
+                            ModelKontrak.upNilai(nilai, ID, (err) => {
+                                if (err) {
+                                    console.log('gagal mengubah nilai Kontrak', err)
+                                    process.exit(1)
+                                }
+                                ViewKontrak.line()
+                                console.log('nilai telah diupdate')
+                                Kontrak.daftarKontrak()
+                            })
+                        })
+                    })
+                })
             })
         })
     }
