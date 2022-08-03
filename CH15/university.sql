@@ -27,7 +27,7 @@ CREATE TABLE rapot(
     nim varchar(10) NOT NULL,
     kodeMatkul varchar(4) NOT NULL,
     nip varchar(6) NOT NULL,
-    nilai varchar(5)NULL,
+    nilai varchar(5),
     FOREIGN KEY (nim) REFERENCES mahasiswa (nim),
     FOREIGN KEY (kodeMatkul) REFERENCES mataKuliah (kodeMatkul),
     FOREIGN KEY (nip) REFERENCES dosen (nip)
