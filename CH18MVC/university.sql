@@ -27,7 +27,7 @@ CREATE TABLE rapot(
     nim varchar(10) NOT NULL,
     kodeMatkul varchar(4) NOT NULL,
     nip varchar(6) NOT NULL,
-    nilai varchar(5) NOT NULL,
+    nilai varchar(5) NULL,
     FOREIGN KEY (nim) REFERENCES mahasiswa (nim),
     FOREIGN KEY (kodeMatkul) REFERENCES mataKuliah (kodeMatkul),
     FOREIGN KEY (nip) REFERENCES dosen (nip)
@@ -58,6 +58,7 @@ INSERT INTO mahasiswa VALUES
 ('2022070009','Emir','Cianjur','J009'),
 ('2022070010','Eril','Makasar','J010');
 
+
 INSERT INTO mataKuliah VALUES 
 ('MK01','gambar teknik',20),
 ('MK02','basic',20),
@@ -84,7 +85,7 @@ INSERT INTO rapot('nim','kodeMatkul','nip','nilai') VALUES
 ('2022070006','MK04','D2204','B+'),
 ('2022070005','MK01','D2203','C+');
 
-UPDATE rapot SET nilai = 'D+' WHERE kodeMatkul = 'MK01';
+
 UPDATE rapot SET nilai = 'E-' WHERE nip = 'D2204';
 UPDATE mataKuliah SET namaMatkul = 'data mining' WHERE kodeMatkul = 'MK01';
 
