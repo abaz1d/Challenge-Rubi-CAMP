@@ -1,36 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Halaman Utama</title>
 </head>
 
 <body>
-
-    <h1 style="font-size: 50px;">BREAD(Browse, Read, Edit, Add, Delete) </h1>
-    <hr>
-    <h2>Filters</h2> 
+    <h1>BREAD (Browse, Read, Edit, Add, Delete)</h1>
+    <table id="list">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>String</th>
+                <th>Integer</th>
+                <th>Float</th>
+                <th>Date</th>
+                <th>Boolean</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% data.forEach((item, index)=> { %>
+                <tr>
+                    <td>
+                        <%= index + 1 %>
+                    </td>
+                    <td>
+                        <%= item.string %>
+                    </td>
+                    <td>
+                        <%= item.integer %>
+                    </td>
+                    <td>
+                        <%= item.float %>
+                    </td>
+                    <td>
+                        <%= item.date %>
+                    </td>
+                    <td>
+                        <%= item.boolean %>
+                    </td>
+                    <td>
+                        <a href="/edit/<%= index %>" class="butedit">Edit</a>
+                        <a href="/delete/<%= index %>" class="butdel">Delete</a>
+                    </td>
+                </tr>
+                <% }) %>
+        </tbody>
+    </table>
     <br>
-    <form action="">
-        <label for="string">STRING :</label>
-        <input type="text" id="string"><br>
-        <label for="integer">INTEGER :</label>
-        <input type="text" id="integer"><br>
-        <label for="float">FLOAT :</label>
-        <input type="text" id="float"><br>
-        <label for="date">DATE :</label>
-        <input type="date" id="date"><br>
-        <label for="">BOOLEAN</label>
-        <select name="" id="">
-            <option value="laki">laki</option>
-            <option value="perm">perm</option>
-        </select>
-        <br>
-        <input type="submit" value="search ">
-    </form>
+    <a href="/add" class="butadd">Add</a>
+
 </body>
 
 </html>
