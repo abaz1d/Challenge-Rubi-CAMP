@@ -98,7 +98,7 @@ h1 {
     box-sizing: border-box;
   }
   
-  input[type=text], select, textarea, [type=number] {
+  input[type=text], select, textarea, [type=number], [type=date] {
     width: 100%;
     padding: 12px;
     border: 1px solid #ccc;

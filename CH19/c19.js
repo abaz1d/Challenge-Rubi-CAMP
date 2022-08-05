@@ -24,7 +24,7 @@ app.get('/add', (req, res) => {
 
 app.post('/add', (req, res) => {
 
-    data.push({ string: req.body.string, integer: parseInt(req.body.integer), float: (req.body.float), date: req.body.date, boolean: JSON.parse(req.body.boolean) })
+    data.push({ string: req.body.string, integer: parseInt(req.body.integer), float: parseFloat(req.body.float), date: req.body.date, boolean: JSON.parse(req.body.boolean) })
     fs.writeFileSync('data.json', JSON.stringify(data));
     res.redirect('/');
 })
@@ -41,7 +41,7 @@ app.get('/edit/:id', (req, res) => {
 })
 
 app.post('/edit/:id', (req, res) => {
-    data[req.params.id] = { string: req.body.string, integer: parseInt(req.body.integer), float: (req.body.float), date: req.body.date, boolean: JSON.parse(req.body.boolean) }
+    data[req.params.id] = { string: req.body.string, integer: parseInt(req.body.integer), float: parseFloat(req.body.float), date: req.body.date, boolean: JSON.parse(req.body.boolean) }
     fs.writeFileSync('data.json', JSON.stringify(data));
     res.redirect('/');
 })

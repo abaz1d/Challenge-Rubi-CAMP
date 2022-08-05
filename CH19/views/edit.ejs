@@ -37,7 +37,7 @@
                     <label for="float">Float</label>
                 </div>
                 <div class="col-85">
-                    <input type="text" name="float" placeholder="Tulis Float" value="<%= item.float %>" required>
+                    <input type="number" name="float" placeholder="Tulis Float" value="<%= item.float %>" required step="0.005">
                 </div>
             </div>
 
@@ -46,7 +46,7 @@
                     <label for="date">Date</label>
                 </div>
                 <div class="col-85">
-                    <input type="text" name="date" value="<%= item.date %>" required>
+                    <input type="date" name="date" value="<%= item.date %>" required>
                 </div>
             </div>
 
