@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Halaman Utama</title>
+</head>
+
+<body>
+    <h1>BREAD (Browse, Read, Edit, Add, Delete)</h1>
+    <table id="list">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>String</th>
+                <th>Integer</th>
+                <th>Float</th>
+                <th>Date</th>
+                <th>Boolean</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% rows.forEach((item, index)=> { %>
+                <tr>
+                    <td>
+                        <%=item.id%>
+                    </td>
+                    <td>
+                        <%=item.string%>
+                    </td>
+                    <td>
+                        <%=item.integer%>
+                    </td>
+                    <td>
+                        <%=item.float%>
+                    </td>
+                    <td>
+                        <%=item.date%>
+                    </td>
+                    <td>
+                        <%= item.boolean==1 ? 'True' : 'False' %>
+                    </td>
+                    <td>
+                        <a href="/edit/<%= index %>" class="butedit">Edit</a>
+                        <a href="/delete/<%= index %>" class="butdel">Delete</a>
+                    </td>
+                </tr>
+                <% }) %>
+        </tbody>
+    </table>
+    <br>
+    <a href="/add" class="butadd">Add</a>
+
+</body>
+
+</html>

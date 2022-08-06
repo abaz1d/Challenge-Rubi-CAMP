@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Edit Data</title>
+</head>
+
+<body>
+    <h1>Edit Data</h1>
+    <div class="container">
+        <form action="" method="post">
+
+            <div class="row">
+                <div class="col-15">
+                    <label for="string">ID</label>
+                </div>
+                <div class="col-85">
+                    <input type="text" name="id" placeholder="Tulis ID" value="<%= rows.id%>" readonly>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-15">
+                    <label for="string">String</label>
+                </div>
+                <div class="col-85">
+                    <input type="text" name="string" placeholder="Tulis String" value="<%= rows.string %>" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-15">
+                    <label for="integer">Integer</label>
+                </div>
+                <div class="col-85">
+                    <input type="number" name="integer" placeholder="Tulis Integer" value="<%= rows.integer %>"
+                        required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-15">
+                    <label for="float">Float</label>
+                </div>
+                <div class="col-85">
+                    <input type="number" name="float" placeholder="Tulis Float" value="<%= rows.float %>" required
+                        step="0.005">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-15">
+                    <label for="date">Date</label>
+                </div>
+                <div class="col-85">
+                    <input type="date" name="date" value="<%= rows.date %>" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-15">
+                    <label for="boolean">Boolean</label>
+                </div>
+                <div class="col-85">
+                    <select id="boolean" , name="boolean" required>
+                        <option value="">--Choose Boolean--</option>
+                        <option value="true" <%=rows.boolean==1 ? 'selected' : '' %>>true</option>
+                        <option value="false" <%=rows.boolean==0 ? 'selected' : '' %>>false</option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <input type="submit" value="Save">
+            </div>
+        </form>
+    </div>
+    <br>
+    <a href="/" class="butadd">Back</a>
+</body>
+
+</html>
