@@ -11,6 +11,90 @@
 
 <body>
     <h1>BREAD (Browse, Read, Edit, Add, Delete)</h1>
+    <hr>
+    <h2>Filters</h2>
+    <div class="container">
+        <form action="" method="get">
+            <div class="row">
+                <div class="col-15">
+                    <input type="checkbox" name="idCheck" class="checkmark">
+                    <label for="idCheck">ID</label>
+                </div>
+                <div class="col-85">
+                    <input type="text" name="id" placeholder="Tulis ID">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-15">
+                    <input type="checkbox" name="stringCheck" class="checkmark">
+                    <label for="stringCheck">String</label>
+                </div>
+                <div class="col-85">
+                    <input type="text" name="string" placeholder="Tulis String">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-15">
+                    <input type="checkbox" name="integerCheck" class="checkmark">
+                    <label for="integerCheck">Integer</label>
+                </div>
+                <div class="col-85">
+                    <input type="number" name="integer" placeholder="Tulis Integer">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-15">
+                    <input type="checkbox" name="floatCheck" class="checkmark">
+                    <label for="floatCheck">Float</label>
+                </div>
+                <div class="col-85">
+                    <input type="number" name="float" placeholder="Tulis Float">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-15">
+                    <input type="checkbox" name="dateCheck" class="checkmark">
+                    <label for="dateCheck">Date</label>
+                </div>
+                <div class="col-85">
+                    <input type="date" name="startDate">
+                </div>
+                <div class="col-15"></div>
+                <div class="col-85">
+
+                    <h4> to </h4>
+                    
+                </div>
+                <div class="col-15"></div>
+                <div class="col-85">
+                    <input type="date" name="endDate">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-15">
+                    <input type="checkbox" name="booleanCheck" class="checkmark">
+                    <label for="booleanCheck">Boolean</label>
+                </div>
+                <div class="col-85">
+                    <select id="boolean" , name="boolean" required>
+                        <option value="" disabled selected>--Choose Boolean--</option>
+                        <option value=1>True</option>
+                        <option value=0>False</option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <input type="submit" value="Search"></input>
+            </div>
+        </form>
+    </div>
+    <h2>Result</h2>
     <table id="list">
         <thead>
             <tr>
@@ -45,15 +129,30 @@
                         <%= item.boolean==1 ? 'True' : 'False' %>
                     </td>
                     <td>
-                        <a href="/edit/<%= index %>" class="butedit">Edit</a>
-                        <a href="/delete/<%= index %>" class="butdel">Delete</a>
+                        <a href="/edit/<%= item.id %>" class="butedit">Edit</a>
+                        <a href="/delete/<%= item.id %>" class="butdel">Delete</a>
                     </td>
                 </tr>
                 <% }) %>
         </tbody>
     </table>
     <br>
-    <a href="/add" class="butadd">Add</a>
+    <div>
+        <a href="/add" type="add" class="butadd">Add</a>
+    </div>
+    <div class="pagination">
+        <%if (page !=1){ %>
+            <a href="/?page= <%=parseInt(page)-1%>">&laquo;</a>
+            <% }%>
+                <% for (let i=1; i <=pages; i++){%>
+                    <a class="<%= i == page ? 'active' : ''%>" href="/?page= <%=i%> ">
+                        <%= i%>
+                    </a>
+                    <% }%>
+                        <%if (page !=pages){ %>
+                            <a href="/?page= <%=parseInt(page)+1%>">&raquo;</a>
+                            <% }%>
+    </div>
 
 </body>
 

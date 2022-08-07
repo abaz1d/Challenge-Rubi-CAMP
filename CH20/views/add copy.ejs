@@ -5,18 +5,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css" type="text/css">
-    <title>Add Data</title>
+    <title>Document</title>
 </head>
 
 <body>
     <div class="containerx">
-        <h1>Add Data</h1>
+        <h1>BREAD (Browse, Read, Edit, Add, Delete)</h1>
+        <h2>Filters</h2>
         <div class="container">
-            <form action="" method="post">
+            <form action="" method="get">
                 <div class="row">
                     <div class="col-15">
-                        <label for="string">ID</label>
+                        <input type="checkbox" name="idCheck" class="checkmark">
+                        <label for="idCheck">ID</label>
                     </div>
                     <div class="col-85">
                         <input type="text" name="id" placeholder="Masukkan id data">
@@ -25,7 +26,8 @@
 
                 <div class="row">
                     <div class="col-15">
-                        <label for="string">String</label>
+                        <input type="checkbox" name="stringCheck" class="checkmark">
+                        <label for="stringCheck">String</label>
                     </div>
                     <div class="col-85">
                         <input type="text" name="string" placeholder="Masukkan data string">
@@ -34,7 +36,8 @@
 
                 <div class="row">
                     <div class="col-15">
-                        <label for="integer">Integer</label>
+                        <input type="checkbox" name="integerCheck" class="checkmark">
+                        <label for="integerCheck">Integer</label>
                     </div>
                     <div class="col-85">
                         <input type="text" name="integer" placeholder="Masukkan data integer">
@@ -43,7 +46,8 @@
 
                 <div class="row">
                     <div class="col-15">
-                        <label for="float">Float</label>
+                        <input type="checkbox" name="floatCheck" class="checkmark">
+                        <label for="floatCheck">Float</label>
                     </div>
                     <div class="col-85">
                         <input type="text" name="float" placeholder="Masukkan data float">
@@ -52,17 +56,26 @@
 
                 <div class="row">
                     <div class="col-15">
-                        <label for="date">Date</label>
+                        <input type="checkbox" name="dateCheck" class="checkmark">
+                        <label for="dateCheck">Date</label>
                     </div>
                     <div class="col-85">
-                        <input type="date" name="date">
+                        <input type="date" name="startDate">
+                    </div>
+                    <div class="col-15"></div>
+                    <div class="col-85">
+                        <h4> to </h4>
+                    </div>
+                    <div class="col-15"></div>
+                    <div class="col-85">
+                        <input type="date" name="endDate">
                     </div>
                 </div>
 
-
                 <div class="row">
                     <div class="col-15">
-                        <label for="boolean">Boolean</label>
+                        <input type="checkbox" name="booleanCheck" class="checkmark">
+                        <label for="booleanCheck">Boolean</label>
                     </div>
                     <div class="col-85">
                         <select id="boolean" , name="boolean">
@@ -74,11 +87,11 @@
                 </div>
                 <br>
                 <div class="row">
-                    <input type="submit"></input>
+                    <input type="submit" value="Search"></input>
                 </div>
             </form>
         </div>
-    </div>
+        <h2>Result</h2>
 </body>
 
 </html>

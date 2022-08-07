@@ -1,163 +1,232 @@
 body {
-    background-color: white;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: white;
 }
 
-h1 {
-    color: black;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-size: 300%;
-    }
+h1{
+  color: black;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 200%;
+  text-align: center;
+}
+h2,h3,h4,h5,h6 {
+  color: black;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+h4 {
+  font-size: small;
+margin-top: 0%;
+margin-left: 6px;
+margin-bottom: 0%;
+}
 
 /* Untuk index.ejs*/
 
 #list {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-    text-align: center;
-    border: 1px;
-    width: 100%;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  text-align: center;
+  border: 1px;
+  width: 100%;
 }
 
 #list td,
 #list th {
-    border: 1px solid #ddd;
-    padding: 10px;
+  border: 1px solid #ddd;
+  padding: 10px;
 }
 
 #list tr:nth-child(odd) {
-    background-color: #F2F2F2;
+  background-color: #F2F2F2;
 }
 
 #list tr:hover {
-    background-color: rgb(218, 215, 215);
+  background-color: rgb(218, 215, 215);
 }
 
 #list th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: center;
-    background-color: #FFFFFF;
-    color: black;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: #FFFFFF;
+  color: black;
 }
 
 .butadd {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    padding: 10px 20px;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-    outline: none;
-    color: #fff;
-    background-color: #047BFC;
-    border: none;
-    border-radius: 4px;
-    font-weight: bold;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #047BFC;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.butadd[type=add] {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  padding: 10px 20px;
+  margin-right: 20px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #047BFC;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  float: right;
 }
 
 .butadd:hover {
-    color: #047BFC;
-    background-color: #b3b3b3;
+  color: #047BFC;
+  background-color: #b3b3b3;
 }
 
 .butedit {
-    background-color: #39ca67;
-    color: white;
-    padding: 6px 10px;
-    margin: auto;
-    border: auto;
-    border-radius: 4px;
-    cursor: pointer;
-    text-decoration: none;
-    font-weight: bold;
+  background-color: #39ca67;
+  color: white;
+  padding: 6px 10px;
+  margin: auto;
+  border: auto;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 .butedit:hover {
-    background-color: rgb(21, 120, 57);
+  background-color: rgb(21, 120, 57);
 }
 
 .butdel {
-    background-color: #c5324b;
-    color: white;
-    padding: 6px 10px;
-    margin: auto;
-    border: auto;
-    border-radius: 4px;
-    cursor: pointer;
-    text-decoration: none;
-    font-weight: bold;
+  background-color: #c5324b;
+  color: white;
+  padding: 6px 10px;
+  margin: auto;
+  border: auto;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 .butdel:hover {
-    background-color: #7c1627;
+  background-color: #7c1627;
 }
 
 /* Untuk add.ejs*/
 
 * {
-    box-sizing: border-box;
-  }
-  
-  input[type=text], select, textarea, [type=number], [type=date] {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    resize: vertical;
-  }
-  
-  label {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    padding: 12px 12px 12px 0;
-    display: inline-block;
-  }
-  
-  input[type=submit] {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    background-color: #047BFC;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    float: right;
-    font-weight: bold;
-  }
+  box-sizing: border-box;
+}
 
-  input[type=submit]:hover {
-    background-color: #c7b9ac;
+input[type=date] {
+  width: 10%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+
+input[type=text],
+select,
+textarea,
+[type=number] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  resize: vertical;
+}
+
+label {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
+
+input[type=submit] {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: #047BFC;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+  font-weight: bold;
+}
+
+input[type=submit]:hover {
+  background-color: #c7b9ac;
+}
+
+.container {
+  border-radius: 15px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+.col-15 {
+  float: left;
+  width: 15%;
+  margin-top: 6px;
+  color: black;
+}
+
+.col-85 {
+  float: left;
+  width: 85%;
+  margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+
+  .col-25,
+  .col-75,
+  input[type=submit] {
+    width: 100%;
+    margin-top: 0;
   }
-  
-  .container {
-    border-radius: 15px;
-    background-color: #f2f2f2;
-    padding: 20px;
-  }
-  
-  .col-15 {
-    float: left;
-    width: 15%;
-    margin-top: 6px;
-    color: black;
-  }
-  
-  .col-85 {
-    float: left;
-    width: 85%;
-    margin-top: 6px;
-  }
-  
-  /* Clear floats after the columns */
-  .row:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-  
-  /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
-  @media screen and (max-width: 600px) {
-    .col-25, .col-75, input[type=submit]{
-      width: 100%;
-      margin-top: 0;
-    }
-  }
+}
+
+.pagination {
+  font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif ;
+  margin-left: 20px;
+  display: inline-block;
+  border-radius: 5px;
+  background-color: #F2F2F2;
+  border: 1px solid dodgerblue;
+}
+
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+.pagination a.active {
+  background-color: dodgerblue;
+  color: white;
+}
+
+.pagination a:hover:not(.active) {
+  background-color: #ddd;
+  border-radius: 5px;
+}

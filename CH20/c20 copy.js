@@ -23,8 +23,8 @@ function add(id, string, integer, float, date, boolean, callback) {
     });
 }
 
-function update(newId, oldId, string, integer, float, date, boolean, callback) {
-    db.run('UPDATE data SET id = ?, string = ?, integer = ?, float = ?, date = ?, boolean = ? WHERE id = ?', [newId, string, integer, float, date, boolean, oldId], (err) => {
+function update(id, string, integer, float, date, boolean, callback) {
+    db.run('UPDATE data SET string = ?, integer = ?, float = ?, date = ?, boolean = ? WHERE id = ?', [string, integer, float, date, boolean, id], (err) => {
         callback(err);
     });
 }
