@@ -2,41 +2,12 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const app = express();
-// const fs = require('fs');
-// const dataPath = "./data.json"
-//const data = JSON.parse(fs.readFileSync('./data.json', 'utf-8'))
 const port = 3000;
 const sqlite3 = require('sqlite3');
-const { constants } = require('buffer');
-const { off } = require('process');
 
 const db = new sqlite3.Database('data.db', sqlite3.OPEN_READWRITE, (err) => {
     if (err) { console.log(`gak nyambung didatabase`, err) };
 });
-
-function select(id, callback) {
-    db.all('SELECT * FROM data WHERE id = ?', id, (err, data) => {
-        callback(err, data);
-    })
-}
-
-function add(id, string, integer, float, date, boolean, callback) {
-    db.run('INSERT INTO data VALUES (?, ?, ?, ?, ?, ?)', [id, string, integer, float, date, boolean], (err) => {
-        callback(err);
-    });
-}
-
-function update(id, string, integer, float, date, boolean, callback) {
-    db.run('UPDATE data SET string = ?, integer = ?, float = ?, date = ?, boolean = ? WHERE id = ?', [string, integer, float, date, boolean, id], (err) => {
-        callback(err);
-    });
-}
-
-function remove(id, callback) {
-    db.run('DELETE FROM data WHERE id = ?', [id], (err) => {
-        callback(err);
-    })
-}
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -47,21 +18,82 @@ app.use(bodyParser.json());
 
 
 app.get('/', (req, res) => {
-    const page = req.query.page || 1
+    const page = req.query.page || 1;
+    const limit = 3;
+    const offset = (page - 1) * limit;
+    const posisi = []
     const values = []
-    const limit = 3
-    const offset = (page - 1) * limit
-        db.all('SELECT COUNT(*) AS total FROM data', values, (err, data) => {
-            if (err){
-                console.error(err)}
-                const pages = Math.ceil(data[0].total / limit)
-            db.all('SELECT * FROM data LIMIT ? OFFSET ?', [...values, limit, offset], (err, data) => {
-                    if (err){
-                        console.error(err);}
-                    res.render('index', { rows: data, pages, page})
-            })
+    const url = req.url == '/' ? '/?page=1' : req.url
+
+    console.log(url)
+    //searching
+    if (req.query.id && req.query.idCheck == 'on') {
+        posisi.push(`id = ?`);
+        values.push(req.query.id);
+    }
+
+    if (req.query.string && req.query.stringCheck == 'on') {
+        posisi.push(`string like '%' || ? || '%'`);
+        values.push(req.query.string);
+    }
+
+    if (req.query.integer && req.query.integerCheck == 'on') {
+        posisi.push(`integer like '%' || ? || '%'`);
+        values.push(req.query.integer);
+    }
+
+    if (req.query.float && req.query.floatCheck == 'on') {
+        posisi.push(`float like '%' || ? || '%'`);
+        values.push(req.query.float);
+    }
+    //
+    if (req.query.dateCheck == 'on') {
+        if (req.query.startDate != '' && req.query.endDate != '') {
+            posisi.push('date BETWEEN ? AND ?')
+            values.push(req.query.startDate);
+            values.push(req.query.endDate);
+        }
+        else if (req.query.startDate) {
+            posisi.push('date > ?')
+            values.push(req.query.startDate);
+        }
+        else if (req.query.endDate) {
+            posisi.push('date < ?')
+            values.push(req.query.endDate);
+        }
+    }
+    //
+    if (req.query.boolean && req.query.booleanCheck == 'on') {
+        posisi.push(`boolean = ?`);
+        values.push(req.query.boolean);
+    }
+
+
+    let sql = 'SELECT COUNT(*) AS total FROM data';
+    if (posisi.length > 0) {
+        sql += ` WHERE ${posisi.join(' AND ')}`
+    }
+
+    db.all(sql, values, (err, data) => {
+        if (err) {
+            console.error(err);
+        }
+        const pages = Math.ceil(data[0].total / limit)
+
+        sql = 'SELECT * FROM data'
+        if (posisi.length > 0) {
+            sql += ` WHERE ${posisi.join(' AND ')}`
+        }
+        sql += ' LIMIT ? OFFSET ?';
+
+        db.all(sql, [...values, limit, offset], (err, data) => {
+            if (err) {
+                console.error(err);
+            }
+            res.render('index', { data, pages, page, query: req.query, url })
         })
     })
+})
 
 
 app.get('/add', (req, res) => {
@@ -91,7 +123,7 @@ app.get('/delete/:id', (req, res) => {
 })
 
 app.get('/edit/:id', (req, res) => {
-    select(req.params.id, (err, data) => {
+    db.all('SELECT * FROM data WHERE id = ?', [req.params.id], (err, data) => {
         if (err) {
             console.error(err);
         }
@@ -100,12 +132,13 @@ app.get('/edit/:id', (req, res) => {
 })
 
 app.post('/edit/:id', (req, res) => {
-    update(req.body.id, req.body.string, parseInt(req.body.integer), parseFloat(req.body.float), req.body.date, req.body.boolean, (err) => {
-        if (err) {
-            console.error(err)
-        }
-        res.redirect('/');
-    })
+    db.run('UPDATE data SET string = ?, integer = ?, float = ?, date = ?, boolean = ? WHERE id = ?',
+        [req.body.string, parseInt(req.body.integer), parseFloat(req.body.float), req.body.date, req.body.boolean, req.params.id], (err) => {
+            if (err) {
+                console.error(err)
+            }
+            res.redirect('/');
+        })
 })
 
 app.listen(port, () => {

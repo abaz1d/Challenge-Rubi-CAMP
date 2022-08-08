@@ -15,82 +15,87 @@
     <h2>Filters</h2>
     <div class="container">
         <form action="" method="get">
+            <input type="hidden" name="page" value="1">
             <div class="row">
                 <div class="col-15">
-                    <input type="checkbox" name="idCheck" class="checkmark">
+                    <input type="checkbox" name="idCheck" class="checkmark" <%=query.idCheck ? 'checked' : '' %> >
                     <label for="idCheck">ID</label>
                 </div>
                 <div class="col-85">
-                    <input type="text" name="id" placeholder="Tulis ID">
+                    <input type="text" name="id" placeholder="Tulis ID" value="<%=query.id%>">
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-15">
-                    <input type="checkbox" name="stringCheck" class="checkmark">
+                    <input type="checkbox" name="stringCheck" class="checkmark" <%=query.stringCheck ? 'checked' : '' %>
+                    >
                     <label for="stringCheck">String</label>
                 </div>
                 <div class="col-85">
-                    <input type="text" name="string" placeholder="Tulis String">
+                    <input type="text" name="string" placeholder="Tulis String" value="<%=query.string%>">
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-15">
-                    <input type="checkbox" name="integerCheck" class="checkmark">
+                    <input type="checkbox" name="integerCheck" class="checkmark" <%=query.integerCheck ? 'checked' : ''
+                        %> >
                     <label for="integerCheck">Integer</label>
                 </div>
                 <div class="col-85">
-                    <input type="number" name="integer" placeholder="Tulis Integer">
+                    <input type="number" name="integer" placeholder="Tulis Integer" value="<%=query.integer%>">
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-15">
-                    <input type="checkbox" name="floatCheck" class="checkmark">
+                    <input type="checkbox" name="floatCheck" class="checkmark" <%=query.floatCheck ? 'checked' : '' %>>
                     <label for="floatCheck">Float</label>
                 </div>
                 <div class="col-85">
-                    <input type="number" name="float" placeholder="Tulis Float">
+                    <input type="number" name="float" placeholder="Tulis Float" value="<%=query.float%>">
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-15">
-                    <input type="checkbox" name="dateCheck" class="checkmark">
+                    <input type="checkbox" name="dateCheck" class="checkmark" <%=query.dateCheck ? 'checked' : '' %> >
                     <label for="dateCheck">Date</label>
                 </div>
                 <div class="col-85">
-                    <input type="date" name="startDate">
+                    <input type="date" name="startDate" value="<%=query.startDate%>">
                 </div>
                 <div class="col-15"></div>
                 <div class="col-85">
 
                     <h4> to </h4>
-                    
+
                 </div>
                 <div class="col-15"></div>
                 <div class="col-85">
-                    <input type="date" name="endDate">
+                    <input type="date" name="endDate" value="<%=query.endDate%>">
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-15">
-                    <input type="checkbox" name="booleanCheck" class="checkmark">
+                    <input type="checkbox" name="booleanCheck" class="checkmark" <%=query.booleanCheck ? 'checked' : ''
+                        %> >
                     <label for="booleanCheck">Boolean</label>
                 </div>
                 <div class="col-85">
-                    <select id="boolean" , name="boolean" required>
+                    <select id="boolean" , name="boolean">
                         <option value="" disabled selected>--Choose Boolean--</option>
-                        <option value=1>True</option>
-                        <option value=0>False</option>
+                        <option value=1 <%=query.boolean==1 ? 'selected' : '' %>>True</option>
+                        <option value=0 <%=query.boolean==0 ? 'selected' : '' %>>False</option>
                     </select>
                 </div>
             </div>
             <br>
             <div class="row">
                 <input type="submit" value="Search"></input>
+                <a href="/" type="reset" class="butadd">Reset</a>
             </div>
         </form>
     </div>
@@ -108,7 +113,7 @@
             </tr>
         </thead>
         <tbody>
-            <% rows.forEach((item, index)=> { %>
+            <% data.forEach((item, index)=> { %>
                 <tr>
                     <td>
                         <%=item.id%>
@@ -140,20 +145,22 @@
     <div>
         <a href="/add" type="add" class="butadd">Add</a>
     </div>
+
     <div class="pagination">
         <%if (page !=1){ %>
-            <a href="/?page= <%=parseInt(page)-1%>">&laquo;</a>
-            <% }%>
-                <% for (let i=1; i <=pages; i++){%>
-                    <a class="<%= i == page ? 'active' : ''%>" href="/?page= <%=i%> ">
-                        <%= i%>
-                    </a>
-                    <% }%>
-                        <%if (page !=pages){ %>
-                            <a href="/?page= <%=parseInt(page)+1%>">&raquo;</a>
-                            <% }%>
-    </div>
+            <a href="<%=url.replace(`page=${page}`,`page=${parseInt(page)-1}`)%>">&laquo;</a>
+        <% }%>
 
+        <% for (let i=1; i <=pages; i++) { %>
+            <a class="<%= i == page ? 'active' : ''%>" href="<%=url.replace(`page=${page}`,`page=${i}`) %>">
+            <%= i%></a>
+        <% }%>
+
+
+        <%if (page <=pages && page !=pages){ %>
+            <a href="<%=url.replace(`page=${page}`,`page=${parseInt(page)+1}`) %>">&raquo;</a>
+         <% }%>
+    </div>
 </body>
 
 </html>

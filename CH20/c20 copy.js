@@ -47,7 +47,7 @@ app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
     const page = req.query.page || 1;
-    const limit = 5;
+    const limit = 3;
     const offset = (page - 1) * limit;
     const wheres = []
     const values = []
