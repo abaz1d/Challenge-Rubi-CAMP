@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
             console.error(err);
         }
         //res.render('index', { total })
-        console.log(total.length)
+        //console.log(total.length)
 
 
         console.log(url)
