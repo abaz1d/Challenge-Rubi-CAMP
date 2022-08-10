@@ -4,19 +4,27 @@ var moment = require('moment')
 
 /* GET home page. */
 module.exports = function (db) {
-  router.get('/', async function (req, res,) {
+  router.get('/', function (req, res,) {
     const url = req.url == '/' ? '/?page=1' : req.url;
     const page = req.query.page || 1;
-    const limit = 3;
+    const limit = 2;
     const offset = (page - 1) * limit;
     const wheres = []
     const values = []
     var count = 1;
+    // var sortBy = req.query.sortBy || `id`
+    // var sortMode = req.query.sortMode || `asc`
+    const filter = `&idCheck=${req.query.idCheck}&id=${req.query.id}&stringCheck=${req.query.stringCheck}&string=${req.query.string}&integerCheck=${req.query.integerCheck}&integer=${req.query.integer}&floatCheck=${req.query.floatCheck}&float=${req.query.float}&dateCheck=${req.query.dateCheck}&startDate=${req.query.startDate}&endDate=${req.query.endDate}&booleanCheck=${req.query.booleanCheck}&boolean=${req.query.boolean}`
+    //const filter = `&idCheck=&id=&stringCheck=&string=&integerCheck=&integer=&floatCheck=&float=&dateCheck=&startDate=&endDate=&booleanCheck=&boolean=`
+    
     var sortBy = req.query.sortBy == undefined ? `id` : req.query.sortBy;
-    var order = req.query.order == undefined ? `asc` : req.query.order;
-
-
-    console.log(req.query)
+    var sortMode = req.query.sortMode == undefined ? `asc` : req.query.sortMode;
+    console.log(url)
+    // console.log(filter)
+    //console.log(`/?page=${parseInt(page)}&sortBy=${sortBy}&sortMode=${sortMode}`)
+    //console.log(url.concat(`&sortBy=${sortBy}&sortMode=${sortMode}`))
+    console.log(sortBy)
+    console.log(sortMode)
 
 
     if (req.query.id && req.query.idCheck == 'on') {
@@ -30,12 +38,12 @@ module.exports = function (db) {
     }
 
     if (req.query.integer && req.query.integerCheck == 'on') {
-      wheres.push(`integer = $${count++}`);
+      wheres.push(`integer ilike '%' || $${count++} || '%'`)
       values.push(req.query.integer);
     }
 
     if (req.query.float && req.query.floatCheck == 'on') {
-      wheres.push(`float = $${count++}`);
+      wheres.push(`float ilike '%' || $${count++} || '%'`)
       values.push(req.query.float);
     }
 
@@ -66,8 +74,6 @@ module.exports = function (db) {
       sql += ` WHERE ${wheres.join(' AND ')}`
     }
 
-    console.log(sql)
-
     db.query(sql, values, (err, data) => {
       if (err) {
         console.error(err);
@@ -77,14 +83,14 @@ module.exports = function (db) {
       if (wheres.length > 0) {
         sql += ` WHERE ${wheres.join(' AND ')}`
       }
-      sql += ` ORDER BY ${sortBy} ${order} LIMIT $${count++} OFFSET $${count++}`;
-      console.log(sql)
-      console.log([...values, limit, offset])
+      sql += ` ORDER BY ${sortBy} ${sortMode} LIMIT $${count++} OFFSET $${count++}`;
+     
+      
       db.query(sql, [...values, limit, offset], (err, data) => {
         if (err) {
           console.error(err);
         }
-        res.render('list', { data: data.rows, pages, page, query: req.query, sortBy, order, moment, url })
+        res.render('list', { data: data.rows, pages, page, query: req.query, moment, url, filter, sortBy, sortMode})
       })
     })
   })
@@ -94,7 +100,8 @@ module.exports = function (db) {
   })
 
   router.post('/add', (req, res) => {
-    db.query('INSERT INTO todos(string,integer,float,date, boolean) VALUES ($1, $2, $3, $4, $5)', [req.body.string, parseInt(req.body.integer), parseFloat(req.body.float), req.body.date, req.body.boolean], (err) => {
+    db.query('INSERT INTO todos(string,integer,float,date, boolean) VALUES ($1, $2, $3, $4, $5)', 
+    [req.body.string, parseInt(req.body.integer), parseFloat(req.body.float), req.body.date, req.body.boolean], (err) => {
       if (err) {
         console.error(err);
       }
