@@ -2,28 +2,20 @@
     <div class="container mt-3">
         <div class="card">
             <div class="card-header text-center">
+                <br>
                 <h1>BREAD (Browse, Read, Edit, Add, Delete)</h1>
+                <br>
             </div>
             <div class="card-body">
                 <form action="" method="get">
                     <input type="hidden" name="page" value="1">
-                    <div class="row mb-3 form-switch">
-                        <input class="form-check-input" type="checkbox" name="idCheck" <%=query.idCheck=='on'
-                            ? 'checked' : '' %> >
-                        <label for="idCheck" class="form-check-label col-sm-2">ID</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="id" placeholder="Tulis ID"
-                                value="<%=query.id%>">
-                        </div>
-                    </div>
-
                     <div class="row mb-3 form-switch">
                         <input class="form-check-input" type="checkbox" name="stringCheck" <%=query.stringCheck=='on'
                             ? 'checked' : '' %> >
                         <label for="string" class="form-check-label col-sm-2">String</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="string" placeholder="Tulis String"
-                                value="<%=query.string%>">
+                                value="<%=query.string != 'undefined' ? query.string : '' %>">
                         </div>
                     </div>
 
@@ -87,54 +79,49 @@
                 <thead>
                     <tr>
                         <th>
-                            <a href="<%=`/?page=${page}${filter}`%><%= sortBy == 'id' && sortMode == 'asc' ? "&sortBy=id&sortMode=desc" : "&sortBy=id&sortMode=asc" %>">
-                                <i
-                                    class="fa-solid fa-<%= query.sortBy == 'id' ? query.sortMode == 'asc' ? 'arrow-up-1-9' : 'arrow-up-9-1' : 'sort' %>"></i>
-                                ID
-                            </a>
-
+                            ID
                         </th>
 
 
                         <th>
-                            <a href="<%=`/?page=${page}${filter}`%><%= sortBy == 'string' && sortMode == 'asc' ? "&sortBy=string&sortMode=desc" : "&sortBy=string&sortMode=asc" %>">
+                            <a href="<%=`/?page=${page}${filter}`%><%= sortBy == 'string' && sortMode ==1 ? "&sortBy=string&sortMode=-1" : "&sortBy=string&sortMode=1" %>">
                                 <i
-                                    class="fa-solid fa-<%= query.sortBy == 'string' ? query.sortMode == 'asc' ? 'arrow-up-a-z' : 'arrow-up-z-a' : 'sort' %>"></i>
+                                    class="fa-solid fa-<%= query.sortBy == 'string' ? query.sortMode ==1 ? 'arrow-up-a-z' : 'arrow-up-z-a' : 'sort' %>"></i>
                                 String
                             </a>
                         </th>
 
 
                         <th>
-                            <a href="<%=`/?page=${page}${filter}`%><%= sortBy == 'integer' && sortMode == 'asc' ? "&sortBy=integer&sortMode=desc" : "&sortBy=integer&sortMode=asc" %>">
+                            <a href="<%=`/?page=${page}${filter}`%><%= sortBy == 'integer' && sortMode ==1 ? "&sortBy=integer&sortMode=-1" : "&sortBy=integer&sortMode=1" %>">
                                 <i
-                                    class="fa-solid fa-<%= query.sortBy == 'integer' ? query.sortMode == 'asc' ? 'arrow-up-1-9' : 'arrow-up-9-1' : 'sort' %>"></i>
+                                    class="fa-solid fa-<%= query.sortBy == 'integer' ? query.sortMode ==1 ? 'arrow-up-1-9' : 'arrow-up-9-1' : 'sort' %>"></i>
                                 Integer
                             </a>
                         </th>
 
 
                         <th>
-                            <a href="<%=`/?page=${page}${filter}`%><%= sortBy == 'float' && sortMode == 'asc' ? "&sortBy=float&sortMode=desc" : "&sortBy=float&sortMode=asc" %>">
+                            <a href="<%=`/?page=${page}${filter}`%><%= sortBy == 'float' && sortMode == 1 ? "&sortBy=float&sortMode=-1" : "&sortBy=float&sortMode=1" %>">
                                 <i
-                                    class="fa-solid fa-<%= query.sortBy == 'float' ? query.sortMode == 'asc' ? 'arrow-up-1-9' : 'arrow-up-9-1' : 'sort' %>"></i>
+                                    class="fa-solid fa-<%= query.sortBy == 'float' ? query.sortMode == 1 ? 'arrow-up-1-9' : 'arrow-up-9-1' : 'sort' %>"></i>
                                 Float
                             </a>
                         </th>
 
                         <th>
-                            <a href="<%=`/?page=${page}${filter}`%><%= sortBy == 'date' && sortMode == 'asc' ? "&sortBy=date&sortMode=desc" : "&sortBy=date&sortMode=asc" %>">
+                            <a href="<%=`/?page=${page}${filter}`%><%= sortBy == 'date' && sortMode == 1 ? "&sortBy=date&sortMode=-1" : "&sortBy=date&sortMode=1" %>">
                                 <i
-                                    class="fa-solid fa-<%= query.sortBy == 'date' ? query.sortMode == 'asc' ? 'arrow-up-short-wide' : 'arrow-up-wide-short' : 'sort' %>"></i>
+                                    class="fa-solid fa-<%= query.sortBy == 'date' ? query.sortMode == 1 ? 'arrow-up-short-wide' : 'arrow-up-wide-short' : 'sort' %>"></i>
                                 Date
                             </a>
                         </th>
 
 
                         <th>
-                            <a href="<%=`/?page=${page}${filter}`%><%= sortBy == 'boolean' && sortMode == 'asc' ? "&sortBy=boolean&sortMode=desc" : "&sortBy=boolean&sortMode=asc" %>">
+                            <a href="<%=`/?page=${page}${filter}`%><%= sortBy == 'boolean' && sortMode == 1 ? "&sortBy=boolean&sortMode=-1" : "&sortBy=boolean&sortMode=1" %>">
                                 <i
-                                    class="fa-solid fa-<%= query.sortBy == 'boolean' ? query.sortMode == 'asc' ? 'check' : 'xmark' : 'sort' %>"></i>
+                                    class="fa-solid fa-<%= query.sortBy == 'boolean' ? query.sortMode == 1 ? 'xmark' : 'check' : 'sort' %>"></i>
                                 Boolean
                             </a>
                         </th>
@@ -145,10 +132,10 @@
                 </thead>
 
                 <tbody>
-                    <% data.forEach((item, index)=> { %>
+                    <% data.forEach((item, index) => { %>
                         <tr>
                             <td>
-                                <%=index + 1%>
+                                <%=item._id%>
                             </td>
                             <td>
                                 <%=item.string%>

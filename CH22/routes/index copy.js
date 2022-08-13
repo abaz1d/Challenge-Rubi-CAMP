@@ -160,9 +160,14 @@ module.exports = function (db) {
 
     //================
 
+    function remove(id, callback) {
+        db.collection("data").deleteOne({ id: parseInt(id) }, (err, res) => {
+            callback(err);
+        })
+    }
+
     router.get('/delete/:id', (req, res) => {
-        const index = req.params.id
-        remove(index, (err) => {
+        db.collection("data").deleteOne({ id: parseInt(index + 1) }, (err, res) => {
             if (err) {
                 console.error(err);
             }
