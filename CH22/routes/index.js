@@ -175,68 +175,6 @@ module.exports = function (db) {
     res.redirect('/')
   })
 
-
-  // //POST, CREATE USERS
-  // router.post('/', async function (req, res, next) {
-  //   try {
-  //     const insertResult = await collection.insertOne({ name: req.body.name, address: req.body.address });
-  //     res.status(201).json(insertResult)
-  //   } catch (e) {
-  //     res.json(e)
-  //   }
-  // });
-
-  // //PUT, EDIT USERS
-  // router.put('/:id', async function (req, res, next) {
-  //   try {
-  //     const updateResult = await collection.updateOne({ _id: ObjectId(req.params.id) }, { $set: { name: req.body.name, address: req.body.address } });
-  //     res.status(201).json(updateResult)
-  //   } catch (e) {
-  //     res.json(e)
-  //   }
-  // });
-
-  // //DELETE, USSER DELETE
-  // router.delete('/:id', async function (req, res, next) {
-  //   try {
-  //     const deleteResult = await collection.deleteOne({ _id: ObjectId(req.params.id) });
-  //     res.status(201).json(deleteResult)
-  //   } catch (e) {
-  //     res.json(e)
-  //   }
-  // });
-
-  // db.collection('users').count().then((count) => {
-  //     console.log(count);
-  // });
-
-  // router.post('/add', (req, res) => {
-
-  //   db.collection("counters").findOneAndUpdate({ _id: 'productid' },
-  //     { $inc: { seq: 1 } },
-  //     { new: true }).then((result) => {
-  //       console.log(result.value.seq)
-  //       var myobj = {
-  //         _id: result.value.seq,
-  //         string: `${req.body.string}`,
-  //         integer: parseInt(req.body.integer),
-  //         float: JSON.parse(req.body.float),
-  //         date: new Date(`${req.body.date}`),
-  //         boolean: JSON.parse(req.body.boolean)
-  //       };
-  //       db.collection("data").insertOne(myobj, function (err, res) {
-  //         if (err) throw err;
-  //         console.log("1 document inserted");
-
-  //       });
-  //       res.redirect('/')
-  //     }
-  //     ).catch((err) => {
-  //       console.log(err)
-  //     })
-
-  // })
-
   return router;
 }
 
