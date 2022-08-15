@@ -5,65 +5,54 @@ var moment = require('moment')
 
 
 module.exports = function (db) {
- 
+
     router.get('/', async function (req, res,) {
         const url = req.url == '/' ? '/?page=1' : req.url;
         const page = req.query.page || 1;
         const limit = 3;
         const offset = (page - 1) * limit;
-        const wheres = []
+        const wheres = {}
         const filter = `&idCheck=${req.query.idCheck}&id=${req.query.id}&stringCheck=${req.query.stringCheck}&string=${req.query.string}&integerCheck=${req.query.integerCheck}&integer=${req.query.integer}&floatCheck=${req.query.floatCheck}&float=${req.query.float}&dateCheck=${req.query.dateCheck}&startDate=${req.query.startDate}&endDate=${req.query.endDate}&booleanCheck=${req.query.booleanCheck}&boolean=${req.query.boolean}`
         var sortBy = req.query.sortBy == undefined ? 'string' : req.query.sortBy;
         var sortMode = req.query.sortMode == undefined ? 1 : req.query.sortMode;
         var sortMongo = JSON.parse(`{"${sortBy}" : ${sortMode}}`);
-        
-
-        let noSql = '{';
-        if (wheres.length > 0) {
-            noSql += `${wheres.join(',')}`
-        }
-        noSql += '}'
-        noSql = JSON.parse(noSql)
-
-        // if (req.query.id && req.query.idCheck == 'on') {
-        //     wheres.push({ "_id": ObjectId(`${req.params.id}`) });
 
         if (req.query.string && req.query.stringCheck == 'on') {
-            noSql["string"] = new RegExp(`${req.query.string}`, 'i')
+            wheres["string"] = new RegExp(`${req.query.string}`, 'i')
         }
 
         if (req.query.integer && req.query.integerCheck == 'on') {
-            wheres.push(`"integer" : ${req.query.integer}`);
+            wheres['integer'] = parseInt(req.query.integer)
         }
 
         if (req.query.float && req.query.floatCheck == 'on') {
-            wheres.push(`"float" : ${req.query.float}`);
+            wheres['float'] = JSON.parse(req.query.float)
         }
 
         if (req.query.dateCheck == 'on') {
             if (req.query.startDate != '' && req.query.endDate != '') {
-                wheres.push(`"date" :{ "$gte": "${req.query.startDate}", "$lte": "${req.query.endDate}"}`)
+                wheres['date'] = { $gte: new Date(`${req.query.startDate}`), $lte: new Date(`${req.query.endDate}`) }
             }
             else if (req.query.startDate) {
-                wheres.push(`"date": {"$gte": "${req.query.startDate}"}`)
+                wheres['date'] = { $gte: new Date(`${req.query.startDate}` )}
             }
             else if (req.query.endDate) {
-                wheres.push(`"date": {"$lte": "${req.query.endDate}"}`)
+                wheres['date'] = { $lte: new Date(`${req.query.endDate}`) }
             }
         }
 
         if (req.query.boolean && req.query.booleanCheck == 'on') {
-            wheres.push(`"boolean" : ${req.query.boolean}`);
+            wheres['boolean'] = JSON.parse(req.query.boolean)
         }
 
 
-        db.collection("users").find(noSql).toArray(function (err, result) {
+        db.collection("users").find(wheres).toArray(function (err, result) {
             if (err) {
                 console.error(err);
             }
             var total = result.length;
             const pages = Math.ceil(total / limit)
-            db.collection("users").find(noSql).skip(offset).limit(limit).collation({'locale':'en'}).sort(sortMongo).toArray((err, data) => {
+            db.collection("users").find(wheres).skip(offset).limit(limit).collation({ 'locale': 'en' }).sort(sortMongo).toArray((err, data) => {
                 if (err) {
                     console.error(err)
                 }
