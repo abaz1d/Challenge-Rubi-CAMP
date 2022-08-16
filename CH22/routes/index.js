@@ -5,7 +5,6 @@ var moment = require('moment')
 
 
 module.exports = function (db) {
-
     router.get('/', async function (req, res,) {
         const url = req.url == '/' ? '/?page=1' : req.url;
         const page = req.query.page || 1;
