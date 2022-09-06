@@ -19,12 +19,12 @@ module.exports = function (db) {
     
     var sortBy = req.query.sortBy == undefined ? `id` : req.query.sortBy;
     var sortMode = req.query.sortMode == undefined ? `asc` : req.query.sortMode;
-    console.log(url)
+    //console.log(url)
     // console.log(filter)
     //console.log(`/?page=${parseInt(page)}&sortBy=${sortBy}&sortMode=${sortMode}`)
     //console.log(url.concat(`&sortBy=${sortBy}&sortMode=${sortMode}`))
-    console.log(sortBy)
-    console.log(sortMode)
+    // console.log(sortBy)
+    // console.log(sortMode)
 
 
     if (req.query.id && req.query.idCheck == 'on') {
@@ -85,7 +85,7 @@ module.exports = function (db) {
       }
       sql += ` ORDER BY ${sortBy} ${sortMode} LIMIT $${count++} OFFSET $${count++}`;
      
-      
+      console.log('sql', sql)
       db.query(sql, [...values, limit, offset], (err, data) => {
         if (err) {
           console.error(err);
